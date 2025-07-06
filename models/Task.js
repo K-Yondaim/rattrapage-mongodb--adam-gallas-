@@ -1,11 +1,28 @@
+const mongoose = require('mongoose');
 
-  // TODO: Définir les champs de la tâche
-  // titre: { type: ???, required: ??? },
-  // description: { type: ??? },
-  // statut: { type: ???, enum: ['a_faire', 'terminee'], default: 'a_faire' },
-  // dateEcheance: { type: ??? }
-  
-  // TODO: Ajouter les timestamps automatiques
-  // timestamps: ???
+const taskSchema = new mongoose.Schema({
+    titre: {
+        type: String,
+        required: [true, 'Le titre est requis']
+    },
+    description: {
+        type: String
+    },
+    statut: {
+        type: String,
+        enum: ['a_faire', 'terminee'],
+        default: 'a_faire'
+    },
+    dateEcheance: {
+        type: Date
+    },
+    utilisateur: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    }
+}, {
+    timestamps: true
+});
 
-// TODO: Exporter le modèle
+module.exports = mongoose.model('Task', taskSchema);
